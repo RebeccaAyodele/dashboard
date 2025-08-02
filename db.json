@@ -1,0 +1,34 @@
+{
+    "stats": {
+      "users": 1200,
+      "newUsers": 350,
+      "pageViews": 7000,
+      "bounceRate": 38
+    },
+    "dailyVisitors": [
+      { "time": "12:00", "visitors": 1059 },
+      { "time": "1:00", "visitors": 2894 },
+      { "time": "2:00", "visitors": 3000 },
+      { "time": "3:00", "visitors": 4000 },
+      { "time": "4:00", "visitors": 3278 },
+      { "time": "5:00", "visitors": 2846 },
+      { "time": "6:00", "visitors": 4278 },
+      { "time": "7:00", "visitors": 7000 },
+      { "time": "8:00", "visitors": 7854 }
+    ],
+    "monthlyVisitors": [
+      { "month": "Jan", "visitors": 706865 },
+      { "month": "Feb", "visitors": 567466 },
+      { "month": "Mar", "visitors": 146670 },
+      { "month": "Apr", "visitors": 467489 },
+      { "month": "May", "visitors": 456675 },
+      { "month": "Jun", "visitors": 235860 },
+      { "month": "July", "visitors": 574936 },
+      { "month": "Aug", "visitors": 237849 },
+      { "month": "Sept", "visitors": 584933 },
+      { "month": "Oct", "visitors": 895738 },
+      { "month": "Nov", "visitors": 784753 },
+      { "month": "Dec", "visitors": 574935 }
+    ]
+  }
+  
