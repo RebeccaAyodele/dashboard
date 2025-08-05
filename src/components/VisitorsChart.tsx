@@ -19,12 +19,12 @@ interface MonthlyVisitor {
 }
 
 const fetchDailyVisitors = async (): Promise<DailyVisitor[]> => {
-  const { data } = await axios.get("http://localhost:4000/dailyVisitors");
+  const { data } = await axios.get("http://localhost:3000/dailyVisitors");
   return data;
 };
 
 const fetchMonthlyVisitors = async (): Promise<MonthlyVisitor[]> => {
-  const { data } = await axios.get("http://localhost:4000/monthlyVisitors");
+  const { data } = await axios.get("http://localhost:3000/monthlyVisitors");
   return data;
 };
 

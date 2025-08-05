@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import WorldMap from "./components/WorldMap";
 import Navbar from "./components/Navbar";
 import Socials from "./components/Socials";
 import User from "./components/User";
@@ -16,6 +17,7 @@ const App = () => {
           <Socials />
           <User />
           <VisitorsChart />
+          <WorldMap />
         </div>
       </div>
       {/* <div className="absolute top-24 left-72">
