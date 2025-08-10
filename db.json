@@ -30,15 +30,44 @@
       { "month": "Nov", "visitors": 784753 },
       { "month": "Dec", "visitors": 574935 }
     ],
-    "worldMap": [
-      [
-        { "country": "United States", "countryCode": "USA", "visitors": "2,478,563", "percentage": 30, "color": "#3b82f6" },
-        { "country": "Australia", "countryCode": "AUS", "visitors": "936,758", "percentage": 23.5, "color": "#10b981" },
-        { "country": "Nigeria", "countryCode": "NGA", "visitors": "3,738,387", "percentage": 30, "color": "#f59e0b" },
-        { "country": "China", "countryCode": "CHN", "visitors": "2,045,862", "percentage": 23, "color": "#f59e0b" },
-        { "country": "New Zealand", "countryCode": "NZL", "visitors": "238,073", "percentage": 30, "color": "#f59e0b" }
+      "worldMap": [
+        [
+          {
+            "country": "United States",
+            "countryCode": "USA",
+            "visitors": "2,478,563",
+            "percentage": 30,
+            "color": "#3b82f6"
+          },
+          {
+            "country": "Australia",
+            "countryCode": "AUS",
+            "visitors": "936,758",
+            "percentage": 23.5,
+            "color": "#10b981"
+          },
+          {
+            "country": "Nigeria",
+            "countryCode": "NGA",
+            "visitors": "3,738,387",
+            "percentage": 30,
+            "color": "#f59e0b"
+          },
+          {
+            "country": "China",
+            "countryCode": "CHN",
+            "visitors": "2,045,862",
+            "percentage": 23,
+            "color": "#f59e0b"
+          },
+          {
+            "country": "New Zealand",
+            "countryCode": "NZL",
+            "visitors": "238,073",
+            "percentage": 30,
+            "color": "#f59e0b"
+          }
+        ]
       ]
-      
-    ] 
   }
   

@@ -20,7 +20,28 @@ type CountryData = {
 // Fetch API
 const fetchCountryStats = async (): Promise<CountryData[]> => {
   const res = await axios.get("http://localhost:3000/worldMap");
-  return res.data.worldMap[0] ?? []; // Adjust if your data shape changes
+  console.log("API response:", res.data);
+  return res.data.worldMap?.flat() || [];
+};
+
+// Numeric country code (from topojson) to ISO_A3 mapping
+const numericToISO3: Record<string, string> = {
+  "840": "USA",
+  "36": "AUS",
+  "566": "NGA",
+  "156": "CHN",
+  "554": "NZL",
+  "242": "Fiji",
+  "834" : "Tanzania",
+  "732": "W. Sahara",
+  "124" : "Canada",
+};
+
+const getISO3FromNumeric = (id: unknown): string | undefined => {
+  if (typeof id === "string" || typeof id === "number") {
+    return numericToISO3[id.toString()];
+  }
+  return undefined;
 };
 
 const WorldMap = () => {
@@ -33,27 +54,49 @@ const WorldMap = () => {
   const [tooltipContent, setTooltipContent] = useState<string | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
-  // Load country shape data
+  // Load country shape data and enrich with ISO_A3
   useEffect(() => {
     const fetchGeo = async () => {
       const res = await fetch(
         "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
       );
       const world = await res.json();
-      const countries = feature(world, world.objects.countries);
+      const countries = feature(world, world.objects.countries) as any;
+
+      countries.features.forEach((feature: any) => {
+        const iso3 = getISO3FromNumeric(feature.id);
+        feature.properties.ISO_A3 = iso3 || "";
+      });
+
       setGeographies(countries.features);
     };
     fetchGeo();
   }, []);
 
-  // Color lookup
+  useEffect(() => {
+    if (geographies.length) {
+      console.log("Sample geographies:", geographies.slice(0, 5).map(g => ({
+        id: g.id,
+        name: g.properties.name,
+      })));
+    }
+  }, [geographies]);
+  
+
+  // Get color for each country region
   const getColor = (code: string): string => {
     const country = countryStats?.find((c) => c.countryCode === code);
     return country?.color || "#e5e7eb";
   };
+  
+
+  useEffect(() => {
+    console.log("Country stats loaded:", countryStats);
+  }, [countryStats]);
 
   return (
     <div className="flex flex-col md:flex-row gap-8 w-full max-w-7xl mx-auto mt-8 px-4">
+      {/* Map Section */}
       <div className="w-full md:w-3/4 relative">
         <h2 className="text-2xl font-bold mb-4 text-center">Visitor Map</h2>
 
@@ -66,11 +109,12 @@ const WorldMap = () => {
             >
               {({ geographies }: { geographies: any[] }) =>
                 geographies.map((geo: any) => {
-                  // const code = geo.properties.ISO_A3; // ISO_A3 is the correct country code
-                  const code = geo.properties.ISO_A3 || geo.id;
+                  const code =
+                    getISO3FromNumeric(geo.id) || geo.properties.ISO_A3 || "";
                   const country = countryStats?.find(
                     (c) => c.countryCode === code
                   );
+                  console.log("Geo ID:", geo.id, "ISO3 code:", code, "Country match:", country);
 
                   return (
                     <Geography
@@ -87,7 +131,7 @@ const WorldMap = () => {
                         setTooltipPos({ x: e.clientX, y: e.clientY });
                       }}
                       onMouseLeave={() => {
-                        setTooltipContent("");
+                        setTooltipContent(null);
                       }}
                       style={{
                         default: {
@@ -126,10 +170,10 @@ const WorldMap = () => {
         )}
       </div>
 
-      {/* Side panel with data */}
+      {/* Side Panel */}
       <div className="w-full md:w-1/4">
         <h3 className="text-xl font-semibold mb-4">Country Stats</h3>
-        {countryStats?.length ? (
+        {countryStats && countryStats.length > 0 ? (
           <ul className="space-y-3">
             {countryStats.map((country) => (
               <li
@@ -141,8 +185,13 @@ const WorldMap = () => {
                   style={{ backgroundColor: country.color }}
                 ></span>
                 <div className="flex-1">
-                  <p className="font-semibold">{country.country}</p>
-                  <p className="text-sm text-gray-600">
+                  <p
+                    className="font-semibold"
+                    style={{ color: country.color }}
+                  >
+                    {country.country}
+                  </p>
+                  <p className="text-sm" style={{ color: country.color }}>
                     {country.visitors} visitors ({country.percentage}%)
                   </p>
                 </div>
